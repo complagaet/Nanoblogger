@@ -67,9 +67,15 @@ app.post("/blogs", async (req, res) => {
     await dbClient.connect();
 
     try {
-        await collection.insertOne(req.body);
+        const blogPost = {
+            ...req.body,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+        };
+
+        await collection.insertOne(blogPost);
         console.log("[POST /blogs]: Blog post inserted successfully.");
-        res.status(201).send(JSON.stringify(req.body));
+        res.status(201).send(JSON.stringify(blogPost));
     } catch (err) {
         console.error("[POST /blogs Error]:", err);
         res.status(500).send("Internal Server Error");
@@ -103,9 +109,14 @@ app.put("/blogs/:id", async (req, res) => {
     await dbClient.connect();
 
     try {
-        await collection.updateOne({ _id: new ObjectId(id) }, { $set: req.body });
+        const updatedData = {
+            ...req.body,
+            updatedAt: new Date().toISOString(),
+        };
+
+        await collection.updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
         console.log(`[PUT /blogs/${id}]: Blog post updated successfully.`);
-        res.send(JSON.stringify(req.body));
+        res.send(JSON.stringify(updatedData));
     } catch (err) {
         console.error(`[PUT /blogs/${id} Error]:`, err);
         res.status(500).send("Internal Server Error");
@@ -114,6 +125,7 @@ app.put("/blogs/:id", async (req, res) => {
         console.log(`[PUT /blogs/${id}]: MongoDB connection closed.`);
     }
 });
+
 
 app.get("/post/:id", async (req, res) => {
     const id = req.params.id;
