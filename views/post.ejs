@@ -14,9 +14,6 @@
     <div class="horizontal-container window-header">
         <h3>Nanoblogger</h3>
     </div>
-    <div class="horizontal-container" style="gap: 10px">
-        <button class="bobatron" Bt-CM="0.5" id="delete">Delete</button>
-    </div>
     <br>
     <div class="vertical-container" style="gap: 10px; max-width: 300px; height: 100%; justify-content: center">
         <label for="author" style="font-weight: bold;">Author</label>
@@ -28,7 +25,10 @@
         <label for="content" style="font-weight: bold;">Post Content</label>
         <textarea id="content" class="bobatron" Bt-CM="0.5" placeholder="Write your post here..." rows="10" required><%= post.content %></textarea>
 
-        <button class="bobatron" Bt-CM="0.5" onclick="updatePost()">Update post</button>
+        <div class="horizontal-container" style="gap: 10px">
+            <button class="bobatron" Bt-CM="0.5" id="delete">Delete</button>
+            <button class="bobatron" Bt-CM="0.5" id="update">Update</button>
+        </div>
     </div>
 </div>
 <div class="footer">

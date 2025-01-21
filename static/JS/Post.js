@@ -29,11 +29,7 @@ const updatePost = async () => {
         },
         body: JSON.stringify({title: title, content: content, author: author})
     });
-    await response.text();
-
-    if (response !== "error") {
-        document.location.href = "/";
-    }
+    return await response.text()
 }
 
 
@@ -44,6 +40,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("delete").onclick = async () => {
         let result = await deletePost(postId);
         if (result === "deleted") {
+            document.location.href = "/";
+        }
+    }
+
+    document.getElementById("update").onclick = async () => {
+        let result = await updatePost();
+        console.log(result);
+        if (result) {
             document.location.href = "/";
         }
     }
